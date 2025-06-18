@@ -1,0 +1,54 @@
+/* EMJAY emjayanm.com Lunar Widget Styles */
+body {
+  background-color: #F1F2EE;
+  font-family: 'Roboto Mono', 'Noto Mono', monospace;
+  color: #435058;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: #435058;
+}
+
+.calendar-container, .timeline-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.moon-date {
+  background: #DCF763;
+  color: #435058;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin: 5px 0;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 220px;
+  background-color: #435058;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position above */
+  left: 50%;
+  margin-left: -110px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
