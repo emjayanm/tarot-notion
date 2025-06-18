@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌙 EMJAY Lunar Widget | emjayanm.com</title>
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Playfair+Display&display=swap');
+
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background-color: #F1F2EE;
+      color: #435058;
+      padding: 20px;
+      text-align: center;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+    }
+
+    .moon-date {
+      background-color: #DCF763;
+      padding: 10px 16px;
+      margin: 6px;
+      display: inline-block;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #435058;
+    }
+
+    .tooltip {
+      position: relative;
+      cursor: help;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 180px;
+      background-color: #435058;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .btn-toggle {
+      font-family: 'Roboto Mono', monospace;
+      background-color: #F1F2EE;
+      color: #435058;
+      border: 1px solid #435058;
+      border-radius: 24px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      box-shadow: 0px 4px #DCF763;
+      transition: all 0.2s ease;
+    }
+
+    .btn-toggle:active {
+      box-shadow: 0px 1px #DCF763;
+      transform: translateY(3px);
+    }
+
+    body.dark-mode {
+      background-color: #2D2D2D;
+      color: #F1F2EE;
+    }
+
+    body.dark-mode .moon-date {
+      background-color: #435058;
+      color: #DCF763;
+    }
+
+    body.dark-mode .tooltip .tooltiptext {
+      background-color: #F1F2EE;
+      color: #2D2D2D;
+    }
+
+    body.dark-mode .btn-toggle {
+      background-color: #435058;
+      color: #DCF763;
+      border: 1px solid #DCF763;
+      box-shadow: 0px 4px #848C8E;
+    }
+
+    body.dark-mode .btn-toggle:active {
+      box-shadow: 0 1px #848C8E;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>New & Full Moons – <span id="year-label"></span></h1>
+  <button class="btn-toggle" onclick="toggleTheme()">Click for Dark Mode</button>
+
+  <div id="calendar-view"></div>
+
+  <script src="moonPhases.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const thisYear = new Date().getFullYear();
+      document.getElementById("year-label").textContent = thisYear;
+
+      const calendarDiv = document.getElementById("calendar-view");
+
+      const filteredMoons = moonPhases.filter(phase => {
+        return new Date(phase.date).getFullYear() === thisYear;
+      });
+
+      filteredMoons.forEach(phase => {
+        const dateObj = new Date(phase.date);
+        const formattedDate = dateObj.toLocaleDateString("en-US", {
+          month: "long", day: "numeric"
+        });
+
+        const el = document.createElement("div");
+        el.className = "moon-date tooltip";
+        el.innerHTML = `${phase.type} — ${formattedDate}<span class="tooltiptext">Moon in ${phase.sign}</span>`;
+
+        calendarDiv.appendChild(el);
+      });
+    });
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+
+</body>
+</html>
