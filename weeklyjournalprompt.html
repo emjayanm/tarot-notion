@@ -1,0 +1,85 @@
+<!-- 
+Created by Sarah at emjayanm.com 
+-->
+<div style="background:#435058; padding:20px; border-radius:12px; font-family:'Roboto Mono', 'Noto Mono', monospace; color:#ffffff; max-width:500px; margin:auto; box-shadow:0px 2px 8px rgba(67,80,88,0.2);">
+  <h2 style="text-align:center; color:#DCF763; text-shadow:1px 1px 2px rgba(0,0,0,0.3);">End of Week Journal Prompt</h2>
+
+  <center><p id="tarotjournalPrompt" style="margin-top:20px; font-size:16px; line-height:1.6; opacity:0; transition:opacity 1.5s ease-in;"></p></center>
+
+  <hr style="border:0; border-top:1px solid #BFB7B6; margin:20px 0;">
+</div>
+
+<script>
+  const prompts = [
+    "What themes are emerging from my weekly card pull, and how do they mirror what’s unfolding in my life?",
+    "How do the energies of the cards I pulled this week relate to one another?",
+    "What patterns or lessons am I being asked to pay attention to this week?",
+    "What message is becoming clearer as I reflect on this week’s cards?",
+    "How does the overall message of my reading support or challenge my current direction?",
+    "What do my cards suggest about how I should show up this week—emotionally, spiritually, or practically?",
+    "What is the root energy behind the situations that came up in my reading?",
+    "What guidance are my cards offering about moving through this week’s challenges?",
+    "Where am I being invited to shift perspective based on what my cards revealed?",
+    "What do these cards tell me about how I’ve been using (or misusing) my energy this week?",
+    "What truth is being illuminated for me through this week’s card spread?",
+    "How do my cards reflect how I’ve grown over the past few weeks?",
+    "What does this reading suggest I need to release or let go of right now?",
+    "What emotional themes came up in my reading that I should sit with more deeply?",
+    "How do these cards affirm what I’ve been sensing intuitively all week?",
+    "What spiritual message is unfolding for me across the cards I pulled this week?",
+    "What area of my life seems to be calling for more attention or care based on these cards?",
+    "How can I integrate the lessons from my reading into real, grounded action this week?",
+    "What surprised me about my reading, and what might that surprise reveal?",
+    "What limiting beliefs are being challenged through the messages I received this week?",
+    "What strengths did my cards highlight that I should lean into right now?",
+    "What relationships or dynamics do these cards speak to, and what clarity is being offered?",
+    "What support—seen or unseen—was reflected in my reading this week?",
+    "What role does timing or divine alignment play in the energy of this week’s pull?",
+    "What message do my cards have for the ‘future me’ I’m stepping into?",
+    "What decision or direction is becoming clearer through this week’s spread?",
+    "How are my mind, body, and spirit being called into greater alignment this week?",
+    "What’s being activated in my higher self through the energy of these cards?",
+    "What hidden opportunities are present in the guidance I received this week?",
+    "How does this week’s reading affirm or challenge my intentions for the month?",
+    "What soul lesson seems to be repeating—and how can I approach it differently?",
+    "What actions do my cards suggest I take (or pause on) this week?",
+    "What emotional or energetic boundary needs reinforcing, based on the cards I pulled?",
+    "What archetypes are present in this reading, and how do they relate to my personal journey?",
+    "What past experiences are being mirrored in this week’s spread, and what wisdom can I carry forward?",
+    "How can I use the guidance from this week’s reading to support my long-term goals?",
+    "What intuitive nudges did I receive this week that are confirmed through these cards?",
+    "What themes are coming to a close, and what new beginnings are hinted at in this reading?",
+    "What truth or insight is now impossible to ignore, based on this week’s pull?",
+    "What spiritual practice or ritual would best support the energy of my reading?",
+    "What part of my inner self feels most seen or validated through these cards?",
+    "How do the symbols, elements, or suits in this reading speak to the week I’ve just had?",
+    "What transformation am I currently moving through, according to the cards I pulled?",
+    "What soul-aligned action can I take to honor this week’s reading?",
+    "What inner conflict or duality is being explored through my spread?",
+    "What part of my identity is shifting, based on what these cards reveal?",
+    "How do this week’s messages prepare me for what’s ahead?",
+    "What creative or inspired energy is ready to move through me this week?",
+    "What habits or behaviors are these cards gently encouraging me to examine?",
+    "Where is there emotional or spiritual clutter I can clear this week?",
+    "What deeper truth about myself was revealed through this week’s reading?",
+    "What is this week’s reading ultimately asking me to remember or reclaim?"
+  ];
+
+  function getISOWeekNumber(date) {
+    const tempDate = new Date(date.getTime());
+    tempDate.setHours(0, 0, 0, 0);
+    tempDate.setDate(tempDate.getDate() + 3 - (tempDate.getDay() + 6) % 7);
+    const week1 = new Date(tempDate.getFullYear(), 0, 4);
+    return 1 + Math.round(((tempDate - week1) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+  }
+
+  const today = new Date();
+  const weekNumber = getISOWeekNumber(today);
+  const promptIndex = (weekNumber - 1) % prompts.length;
+  const promptElement = document.getElementById("tarotjournalPrompt");
+
+  promptElement.textContent = prompts[promptIndex];
+  setTimeout(() => {
+    promptElement.style.opacity = 1;
+  }, 100);
+</script>
