@@ -1,66 +1,107 @@
+<!-- 
+Created by Sarah at emjayanm.com 
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Daily 3-Card Tarot Pull</title>
-<style>
-  body {
-    background-color: #f1f2ee;
-    font-family: 'Courier New', Courier, monospace;
-    color: #435058;
-    text-align: center;
-    padding: 2em;
-    margin: 0;
-  }
-  h1 {
-    font-size: 2em;
-    color: #435058;
-    margin-bottom: 1em;
-  }
-  .cards-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5em;
-    margin-top: 1em;
-  }
-  .card {
-    background: #dcf763;
-    color: #435058;
-    border-radius: 8px;
-    padding: 1em;
-    width: 80%;
-    max-width: 400px;
-    box-shadow: 0 4px 8px rgba(67, 80, 88, 0.15);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-  }
-  .card.fade-in {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  button {
-    margin: 0.5em;
-    padding: 0.7em 1.5em;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1em;
-    background-color: #848c8e;
-    color: #f1f2ee;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  button:hover {
-    background-color: #435058;
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Daily 3-Card Tarot Pull</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #2a3747;
+      --text-color: #ffffff;
+      --title-color: #bc8539;
+      --card-bg: #3c4c5f;
+      --button-bg: #848c8e;
+      --button-hover: #bc8539;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--text-color);
+      text-align: center;
+      padding: 2em;
+      margin: 0;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: var(--title-color);
+      margin-bottom: 1em;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5em;
+      margin-top: 1em;
+    }
+
+    .card {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border-radius: 8px;
+      padding: 1em;
+      width: 80%;
+      max-width: 400px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .card.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    button {
+      margin: 0.5em;
+      padding: 0.7em 1.5em;
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1em;
+      background-color: var(--button-bg);
+      color: #f1f2ee;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: var(--button-hover);
+      transform: scale(1.05);
+    }
+
+    .dark-toggle {
+      position: fixed;
+      top: 1em;
+      right: 1em;
+      z-index: 10;
+    }
+
+    .light-mode {
+      --bg-color: #f1f2ee;
+      --text-color: #435058;
+      --title-color: #435058;
+      --card-bg: #dcf763;
+      --button-bg: #848c8e;
+      --button-hover: #435058;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Creator credit (hidden in HTML) -->
 <!-- Tarot Pull Widget created by Sarah at emjayanm.com -->
+
+<button class="dark-toggle" onclick="toggleMode()">Toggle Dark/Light</button>
 
 <h1>🌙 Your 3-Card Tarot Pull</h1>
 <div>
@@ -70,203 +111,110 @@
 
 <div id="cards" class="cards-container"></div>
 
-<!-- Small shuffle sound -->
 <audio id="shuffle-sound" src="https://cdn.pixabay.com/download/audio/2023/03/30/audio_7d25bc1906.mp3?filename=card-flip-102327.mp3" preload="auto"></audio>
 
 <script>
-// Rider-Waite major arcana with upright and reversed meanings
-const deck = [
-{
-  name: "The Fool",
-  meaning_up: "You are standing at the edge of a new beginning. Trust your spirit and embrace the unknown.",
-  meaning_rev: "A need for grounding before leaping forward; consider your path and make intentional moves."
-},
-{
-  name: "The Magician",
-  meaning_up: "You have everything you need to manifest your desires. Align your intention and take inspired action.",
-  meaning_rev: "An invitation to reconnect with your inner tools and refocus your energy where you feel expansion."
-},
-{
-  name: "The High Priestess",
-  meaning_up: "Your intuition and awareness knows. Pause, listen, and honor the all of energy that is unfolding within you.",
-  meaning_rev: "A reminder to slow down and trust your inner voice more deeply."
-},
-{
-  name: "The Empress",
-  meaning_up: "You are a vessel of abundance, beauty, and creation. Nurture yourself and those around you.",
-  meaning_rev: "Nourish yourself first; creativity blooms when you feel supported and safe."
-},
-{
-  name: "The Emperor",
-  meaning_up: "Stability and leadership are within reach. Stand firm in your truth and protect what matters.",
-  meaning_rev: "Time to loosen rigid structures and invite more flexibility into your life."
-},
-{
-  name: "The Hierophant",
-  meaning_up: "Sacred knowledge flows through tradition, ritual, and shared wisdom. Honor and trust your gifts.",
-  meaning_rev: "Encouragement to explore your own beliefs and spiritual path."
-},
-{
-  name: "The Lovers",
-  meaning_up: "Deep connection and alignment are possible. Values and decisions are front and center. Focus on what feels aligned, and travel that path.",
-  meaning_rev: "A call to reflect on alignment within yourself or in your connections."
-},
-{
-  name: "The Chariot",
-  meaning_up: "With clarity and willpower, you are ready to move forward with purpose and direction.",
-  meaning_rev: "Pause and reflect before taking action. Realignment brings clarity."
-},
-{
-  name: "Strength",
-  meaning_up: "You hold a gentle power. Remember,true strength comes from compassion, not force.",
-  meaning_rev: "Gentle strength is needed now. Nurture your resilience with love & compassion."
-},
-{
-  name: "The Hermit",
-  meaning_up: "Solitude brings insight. It's a good time to focus on you right now.",
-  meaning_rev: "If you're feeling disconnected, take time to re-balance, but don't sit in solitude too long."
-},
-{
-  name: "Wheel of Fortune",
-  meaning_up: "The universe is shifting for you in the best ways! Keep going!",
-  meaning_rev: "Be open to changes. Even detours hold hidden blessings."
-},
-{
-  name: "Justice",
-  meaning_up: "Truth, clarity, and balance are available to you right now.",
-  meaning_rev: "Focus inward to find balance and clarity as not all truths are external."
-},
-{
-  name: "The Hanged Man",
-  meaning_up: "Surrender to a new perspective pause brings wisdom and freedom.",
-  meaning_rev: "Surrender is a process. Give yourself permission to move at your pace."
-},
-{
-  name: "Death",
-  meaning_up: "Let go to grow. Transformation is a sacred cycle of endings and rebirth in every aspect of life.",
-  meaning_rev: "Transformation is unfolding so allow gentle release of what no longer serves you."
-},
-{
-  name: "Temperance",
-  meaning_up: "Balance, peace, and patience are your allies here. Find your flow and trust divine timing.",
-  meaning_rev: "A reminder to return to your center and allow healing to unfold gradually."
-},
-{
-  name: "The Devil",
-  meaning_up: "Awareness is rising. Notice what holds you back and reclaim your power.",
-  meaning_rev: "Freedom is near. Notice where empowerment is ready to return."
-},
-{
-  name: "The Tower",
-  meaning_up: "Everything is shifting for your highest good! What falls away clears space for truth.",
-  meaning_rev: "You are being prepared for a breakthrough. Ttrust what’s being cleared."
-},
-{
-  name: "The Star",
-  meaning_up: "Hope is returning and it's beautiful. Allow yourself to be guided by inspiration and have faith.",
-  meaning_rev: "Hope may feel distant, but it still surrounds you always be aware and look for subtle signs. Have faith."
-},
-{
-  name: "The Moon",
-  meaning_up: "You are moving through mystery — honor your feelings and trust the unseen.",
-  meaning_rev: "Let clarity come softly — not all answers need to arrive at once."
-},
-{
-  name: "The Sun",
-  meaning_up: "Radiance, joy, and vitality are prominent in your life. Celebrate your light and let it shine freely.",
-  meaning_rev: "Joy is returning if you haven't experienced it recently. Release what isn't serving your highest good now."
-},
-{
-  name: "Judgement",
-  meaning_up: "This is your awakening. Make changes and decisions that align with where you ultimately want to go. Rise into alignment with your soul’s purpose.",
-  meaning_rev: "Your awakening is gentle. Give yourself grace as you grow and evolve."
-},
-{
-  name: "The World",
-  meaning_up: "You’ve come full circle. Celebrate your wholeness and all that you’ve integrated so far.",
-  meaning_rev: "You're nearly there. Reflect on what needs closure for the next chapter."
-}
+  const deck = [
+    { name: "The Fool", meaning_up: "You are standing at the edge of a new beginning. Trust your spirit and embrace the unknown.", meaning_rev: "A need for grounding before leaping forward; consider your path and make intentional moves." },
+    { name: "The Magician", meaning_up: "You have everything you need to manifest your desires. Align your intention and take inspired action.", meaning_rev: "An invitation to reconnect with your inner tools and refocus your energy where you feel expansion." },
+    { name: "The High Priestess", meaning_up: "Your intuition and awareness knows. Pause, listen, and honor the all of energy that is unfolding within you.", meaning_rev: "A reminder to slow down and trust your inner voice more deeply." },
+    { name: "The Empress", meaning_up: "You are a vessel of abundance, beauty, and creation. Nurture yourself and those around you.", meaning_rev: "Nourish yourself first; creativity blooms when you feel supported and safe." },
+    { name: "The Emperor", meaning_up: "Stability and leadership are within reach. Stand firm in your truth and protect what matters.", meaning_rev: "Time to loosen rigid structures and invite more flexibility into your life." },
+    { name: "The Hierophant", meaning_up: "Sacred knowledge flows through tradition, ritual, and shared wisdom. Honor and trust your gifts.", meaning_rev: "Encouragement to explore your own beliefs and spiritual path." },
+    { name: "The Lovers", meaning_up: "Deep connection and alignment are possible. Values and decisions are front and center. Focus on what feels aligned, and travel that path.", meaning_rev: "A call to reflect on alignment within yourself or in your connections." },
+    { name: "The Chariot", meaning_up: "With clarity and willpower, you are ready to move forward with purpose and direction.", meaning_rev: "Pause and reflect before taking action. Realignment brings clarity." },
+    { name: "Strength", meaning_up: "You hold a gentle power. Remember,true strength comes from compassion, not force.", meaning_rev: "Gentle strength is needed now. Nurture your resilience with love & compassion." },
+    { name: "The Hermit", meaning_up: "Solitude brings insight. It's a good time to focus on you right now.", meaning_rev: "If you're feeling disconnected, take time to re-balance, but don't sit in solitude too long." },
+    { name: "Wheel of Fortune", meaning_up: "The universe is shifting for you in the best ways! Keep going!", meaning_rev: "Be open to changes. Even detours hold hidden blessings." },
+    { name: "Justice", meaning_up: "Truth, clarity, and balance are available to you right now.", meaning_rev: "Focus inward to find balance and clarity as not all truths are external." },
+    { name: "The Hanged Man", meaning_up: "Surrender to a new perspective pause brings wisdom and freedom.", meaning_rev: "Surrender is a process. Give yourself permission to move at your pace." },
+    { name: "Death", meaning_up: "Let go to grow. Transformation is a sacred cycle of endings and rebirth in every aspect of life.", meaning_rev: "Transformation is unfolding so allow gentle release of what no longer serves you." },
+    { name: "Temperance", meaning_up: "Balance, peace, and patience are your allies here. Find your flow and trust divine timing.", meaning_rev: "A reminder to return to your center and allow healing to unfold gradually." },
+    { name: "The Devil", meaning_up: "Awareness is rising. Notice what holds you back and reclaim your power.", meaning_rev: "Freedom is near. Notice where empowerment is ready to return." },
+    { name: "The Tower", meaning_up: "Everything is shifting for your highest good! What falls away clears space for truth.", meaning_rev: "You are being prepared for a breakthrough. Ttrust what’s being cleared." },
+    { name: "The Star", meaning_up: "Hope is returning and it's beautiful. Allow yourself to be guided by inspiration and have faith.", meaning_rev: "Hope may feel distant, but it still surrounds you always be aware and look for subtle signs. Have faith." },
+    { name: "The Moon", meaning_up: "You are moving through mystery — honor your feelings and trust the unseen.", meaning_rev: "Let clarity come softly — not all answers need to arrive at once." },
+    { name: "The Sun", meaning_up: "Radiance, joy, and vitality are prominent in your life. Celebrate your light and let it shine freely.", meaning_rev: "Joy is returning if you haven't experienced it recently. Release what isn't serving your highest good now." },
+    { name: "Judgement", meaning_up: "This is your awakening. Make changes and decisions that align with where you ultimately want to go. Rise into alignment with your soul’s purpose.", meaning_rev: "Your awakening is gentle. Give yourself grace as you grow and evolve." },
+    { name: "The World", meaning_up: "You’ve come full circle. Celebrate your wholeness and all that you’ve integrated so far.", meaning_rev: "You're nearly there. Reflect on what needs closure for the next chapter." }
+  ];
 
-];
+  const spreadPositions = ["Past", "Present", "Future"];
 
-const spreadPositions = ["Past", "Present", "Future"];
-
-// Play shuffle sound
-function playShuffleSound() {
-  const sound = document.getElementById('shuffle-sound');
-  sound.currentTime = 0;
-  sound.play();
-}
-
-// Save and load today's cards
-function saveDailyPull(cards, type) {
-  const today = new Date().toISOString().split('T')[0];
-  localStorage.setItem('tarot_pull_date', today);
-  localStorage.setItem('tarot_pull_cards', JSON.stringify(cards));
-  localStorage.setItem('tarot_pull_type', type);
-}
-
-function loadDailyPull() {
-  const today = new Date().toISOString().split('T')[0];
-  const savedDate = localStorage.getItem('tarot_pull_date');
-  if (savedDate === today) {
-    return {
-      cards: JSON.parse(localStorage.getItem('tarot_pull_cards')),
-      type: localStorage.getItem('tarot_pull_type')
-    };
+  function playShuffleSound() {
+    const sound = document.getElementById('shuffle-sound');
+    sound.currentTime = 0;
+    sound.play();
   }
-  return null;
-}
 
-function pullCards(type) {
-  const dailyPull = loadDailyPull();
-  let cardsToShow;
-  let spreadType;
+  function saveDailyPull(cards, type) {
+    const today = new Date().toISOString().split('T')[0];
+    localStorage.setItem('tarot_pull_date', today);
+    localStorage.setItem('tarot_pull_cards', JSON.stringify(cards));
+    localStorage.setItem('tarot_pull_type', type);
+  }
 
-  if (dailyPull && dailyPull.type === type) {
-    cardsToShow = dailyPull.cards;
-    spreadType = dailyPull.type;
-  } else {
-    const shuffled = [...deck].sort(() => Math.random() - 0.5);
-    const selected = shuffled.slice(0, 3).map(card => {
-      const isReversed = Math.random() < 0.5;
+  function loadDailyPull() {
+    const today = new Date().toISOString().split('T')[0];
+    const savedDate = localStorage.getItem('tarot_pull_date');
+    if (savedDate === today) {
       return {
-        name: card.name,
-        orientation: isReversed ? "Reversed" : "Upright",
-        meaning: isReversed ? card.meaning_rev : card.meaning_up
+        cards: JSON.parse(localStorage.getItem('tarot_pull_cards')),
+        type: localStorage.getItem('tarot_pull_type')
       };
-    });
-    cardsToShow = selected;
-    spreadType = type;
-    saveDailyPull(selected, type);
+    }
+    return null;
   }
 
-  const cardsDiv = document.getElementById('cards');
-  cardsDiv.innerHTML = '';
-  playShuffleSound();
+  function pullCards(type) {
+    const dailyPull = loadDailyPull();
+    let cardsToShow;
+    let spreadType;
 
-  cardsToShow.forEach((card, index) => {
-    const cardDiv = document.createElement('div');
-    cardDiv.className = 'card';
-    setTimeout(() => {
-      cardDiv.classList.add('fade-in');
-    }, 100 * index);
-
-    if (spreadType === 'pastpresentfuture') {
-      cardDiv.innerHTML = `
-        <h2>${spreadPositions[index]}: ${card.name} (${card.orientation})</h2>
-        <p>${card.meaning}</p>
-      `;
+    if (dailyPull && dailyPull.type === type) {
+      cardsToShow = dailyPull.cards;
+      spreadType = dailyPull.type;
     } else {
-      cardDiv.innerHTML = `
-        <h2>${card.name} (${card.orientation})</h2>
-        <p>${card.meaning}</p>
-      `;
+      const shuffled = [...deck].sort(() => Math.random() - 0.5);
+      const selected = shuffled.slice(0, 3).map(card => {
+        const isReversed = Math.random() < 0.5;
+        return {
+          name: card.name,
+          orientation: isReversed ? "Reversed" : "Upright",
+          meaning: isReversed ? card.meaning_rev : card.meaning_up
+        };
+      });
+      cardsToShow = selected;
+      spreadType = type;
+      saveDailyPull(selected, type);
     }
-    cardsDiv.appendChild(cardDiv);
-  });
-}
+
+    const cardsDiv = document.getElementById('cards');
+    cardsDiv.innerHTML = '';
+    playShuffleSound();
+
+    cardsToShow.forEach((card, index) => {
+      const cardDiv = document.createElement('div');
+      cardDiv.className = 'card';
+      setTimeout(() => {
+        cardDiv.classList.add('fade-in');
+      }, 100 * index);
+
+      if (spreadType === 'pastpresentfuture') {
+        cardDiv.innerHTML = `<h2>${spreadPositions[index]}: ${card.name} (${card.orientation})</h2><p>${card.meaning}</p>`;
+      } else {
+        cardDiv.innerHTML = `<h2>${card.name} (${card.orientation})</h2><p>${card.meaning}</p>`;
+      }
+
+      cardsDiv.appendChild(cardDiv);
+    });
+  }
+
+  function toggleMode() {
+    document.body.classList.toggle('light-mode');
+  }
 </script>
 
 </body>
 </html>
+
