@@ -20,7 +20,7 @@ Created by Sarah at emjayanm.com
     body {
       background-color: var(--bg-color);
       font-family: 'Instrument Serif', serif;
-      font-style: italic;
+      font-style: normal;
       font-weight: 400;
       color: var(--text-color);
       text-align: center;
@@ -32,7 +32,7 @@ Created by Sarah at emjayanm.com
     h1 {
       font-size: 2em;
       color: var(--title-color);
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
     }
 
     .cards-container {
@@ -80,6 +80,10 @@ Created by Sarah at emjayanm.com
       transform: scale(1.05);
     }
 
+    .card-title {
+      font-style: italic;
+    }
+
     .light-mode {
       --bg-color: #ffffff;
       --text-color: #435058;
@@ -87,13 +91,10 @@ Created by Sarah at emjayanm.com
       --card-bg: #e0d8c3;
       --button-bg: #848c8e;
       --button-hover: #435058;
-  
     }
   </style>
 </head>
 <body>
-
-<!-- Tarot Pull Widget created by Sarah at emjayanm.com -->
 
 <h1>🌙 Your 3-Card Tarot Pull</h1>
 
@@ -120,16 +121,16 @@ Created by Sarah at emjayanm.com
     { name: "The Hierophant", meaning_up: "Sacred knowledge flows through tradition, ritual, and shared wisdom. Honor and trust your gifts.", meaning_rev: "Encouragement to explore your own beliefs and spiritual path." },
     { name: "The Lovers", meaning_up: "Deep connection and alignment are possible. Values and decisions are front and center. Focus on what feels aligned, and travel that path.", meaning_rev: "A call to reflect on alignment within yourself or in your connections." },
     { name: "The Chariot", meaning_up: "With clarity and willpower, you are ready to move forward with purpose and direction.", meaning_rev: "Pause and reflect before taking action. Realignment brings clarity." },
-    { name: "Strength", meaning_up: "You hold a gentle power. Remember,true strength comes from compassion, not force.", meaning_rev: "Gentle strength is needed now. Nurture your resilience with love & compassion." },
+    { name: "Strength", meaning_up: "You hold a gentle power. Remember, true strength comes from compassion, not force.", meaning_rev: "Gentle strength is needed now. Nurture your resilience with love & compassion." },
     { name: "The Hermit", meaning_up: "Solitude brings insight. It's a good time to focus on you right now.", meaning_rev: "If you're feeling disconnected, take time to re-balance, but don't sit in solitude too long." },
     { name: "Wheel of Fortune", meaning_up: "The universe is shifting for you in the best ways! Keep going!", meaning_rev: "Be open to changes. Even detours hold hidden blessings." },
     { name: "Justice", meaning_up: "Truth, clarity, and balance are available to you right now.", meaning_rev: "Focus inward to find balance and clarity as not all truths are external." },
-    { name: "The Hanged Man", meaning_up: "Surrender to a new perspective pause brings wisdom and freedom.", meaning_rev: "Surrender is a process. Give yourself permission to move at your pace." },
-    { name: "Death", meaning_up: "Let go to grow. Transformation is a sacred cycle of endings and rebirth in every aspect of life.", meaning_rev: "Transformation is unfolding so allow gentle release of what no longer serves you." },
+    { name: "The Hanged Man", meaning_up: "Surrender to a new perspective. Pause brings wisdom and freedom.", meaning_rev: "Surrender is a process. Give yourself permission to move at your pace." },
+    { name: "Death", meaning_up: "Let go to grow. Transformation is a sacred cycle of endings and rebirth in every aspect of life.", meaning_rev: "Transformation is unfolding, so allow gentle release of what no longer serves you." },
     { name: "Temperance", meaning_up: "Balance, peace, and patience are your allies here. Find your flow and trust divine timing.", meaning_rev: "A reminder to return to your center and allow healing to unfold gradually." },
     { name: "The Devil", meaning_up: "Awareness is rising. Notice what holds you back and reclaim your power.", meaning_rev: "Freedom is near. Notice where empowerment is ready to return." },
-    { name: "The Tower", meaning_up: "Everything is shifting for your highest good! What falls away clears space for truth.", meaning_rev: "You are being prepared for a breakthrough. Ttrust what’s being cleared." },
-    { name: "The Star", meaning_up: "Hope is returning and it's beautiful. Allow yourself to be guided by inspiration and have faith.", meaning_rev: "Hope may feel distant, but it still surrounds you always be aware and look for subtle signs. Have faith." },
+    { name: "The Tower", meaning_up: "Everything is shifting for your highest good! What falls away clears space for truth.", meaning_rev: "You are being prepared for a breakthrough. Trust what’s being cleared." },
+    { name: "The Star", meaning_up: "Hope is returning and it's beautiful. Allow yourself to be guided by inspiration and have faith.", meaning_rev: "Hope may feel distant, but it still surrounds you. Be aware and look for subtle signs. Have faith." },
     { name: "The Moon", meaning_up: "You are moving through mystery — honor your feelings and trust the unseen.", meaning_rev: "Let clarity come softly — not all answers need to arrive at once." },
     { name: "The Sun", meaning_up: "Radiance, joy, and vitality are prominent in your life. Celebrate your light and let it shine freely.", meaning_rev: "Joy is returning if you haven't experienced it recently. Release what isn't serving your highest good now." },
     { name: "Judgement", meaning_up: "This is your awakening. Make changes and decisions that align with where you ultimately want to go. Rise into alignment with your soul’s purpose.", meaning_rev: "Your awakening is gentle. Give yourself grace as you grow and evolve." },
@@ -198,9 +199,9 @@ Created by Sarah at emjayanm.com
       }, 100 * index);
 
       if (spreadType === 'pastpresentfuture') {
-        cardDiv.innerHTML = `<h2>${spreadPositions[index]}: ${card.name} (${card.orientation})</h2><p>${card.meaning}</p>`;
+        cardDiv.innerHTML = `<h2><span class="card-title">${spreadPositions[index]}: ${card.name}</span> (${card.orientation})</h2><p>${card.meaning}</p>`;
       } else {
-        cardDiv.innerHTML = `<h2>${card.name} (${card.orientation})</h2><p>${card.meaning}</p>`;
+        cardDiv.innerHTML = `<h2><span class="card-title">${card.name}</span> (${card.orientation})</h2><p>${card.meaning}</p>`;
       }
 
       cardsDiv.appendChild(cardDiv);
