@@ -80,13 +80,6 @@ Created by Sarah at emjayanm.com
       transform: scale(1.05);
     }
 
-    .dark-toggle {
-      position: fixed;
-      top: 1em;
-      right: 1em;
-      z-index: 10;
-    }
-
     .light-mode {
       --bg-color: #f1f2ee;
       --text-color: #435058;
@@ -101,9 +94,12 @@ Created by Sarah at emjayanm.com
 
 <!-- Tarot Pull Widget created by Sarah at emjayanm.com -->
 
-<button class="dark-toggle" onclick="toggleMode()">Toggle Dark/Light</button>
-
 <h1>🌙 Your 3-Card Tarot Pull</h1>
+
+<div style="margin-bottom: 1em;">
+  <button onclick="toggleMode()">Toggle Dark/Light</button>
+</div>
+
 <div>
   <button onclick="pullCards('pastpresentfuture')">Past / Present / Future Pull</button>
   <button onclick="pullCards('general')">General 3-Card Pull</button>
