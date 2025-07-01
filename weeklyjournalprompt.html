@@ -1,15 +1,17 @@
 <!-- 
 Created by Sarah at emjayanm.com 
 -->
-<div style="background:#435058; padding:20px; border-radius:12px; font-family:'Roboto Mono', 'Noto Mono', monospace; color:#ffffff; max-width:500px; margin:auto; box-shadow:0px 2px 8px rgba(67,80,88,0.2);">
-  <h2 style="text-align:center; color:#DCF763; text-shadow:1px 1px 2px rgba(0,0,0,0.3);">End of Week Journal Prompt</h2>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+
+<div style="background:#2a3747; padding:20px; border-radius:12px; font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; color:#ffffff; max-width:600px; margin:auto; box-shadow:0px 2px 8px rgba(0,0,0,0.3);">
+  <h2 style="text-align:center; color:#bc8539; text-shadow:1px 1px 2px rgba(0,0,0,0.3); font-size:24px;">End of Week Journal Prompt</h2>
 
   <center>
-    <p id="tarotjournalPrompt" style="margin-top:20px; font-size:16px; line-height:1.6; opacity:0; transition:opacity 1.5s ease-in;"></p>
-    <p id="countdown" style="margin-top:20px; font-size:14px; color:#DCF763;"></p>
+    <p id="tarotjournalPrompt" style="margin-top:20px; font-size:21px; line-height:1.6; opacity:0; transition:opacity 1.5s ease-in;"></p>
+    <p id="countdown" style="margin-top:20px; font-size:16px; color:#ffffff;"></p>
   </center>
 
-  <hr style="border:0; border-top:1px solid #BFB7B6; margin:20px 0;">
+  <hr style="border:0; border-top:1px solid #555; margin:20px 0;">
 </div>
 
 <script>
@@ -86,7 +88,6 @@ Created by Sarah at emjayanm.com
     promptElement.style.opacity = 1;
   }, 100);
 
-  // Countdown logic
   function updateCountdown() {
     const now = new Date();
     const daysUntilNextSunday = (7 - now.getDay()) % 7 || 7;
@@ -96,14 +97,14 @@ Created by Sarah at emjayanm.com
 
     const diff = nextSunday - now;
 
-    const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
-    const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, "0");
-    const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
     document.getElementById("countdown").textContent =
-      `Next prompt in: ${hours}h ${minutes}m ${seconds}s`;
+      `Next prompt in: ${days} day${days !== 1 ? "s" : ""}, ${hours} hour${hours !== 1 ? "s" : ""}, ${minutes} minute${minutes !== 1 ? "s" : ""}`;
   }
 
   updateCountdown();
-  setInterval(updateCountdown, 1000);
+  setInterval(updateCountdown, 60000); // updates every minute
 </script>
